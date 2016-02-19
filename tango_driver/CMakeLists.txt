@@ -5,6 +5,7 @@ project(tango_driver)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS roscpp geometry_msgs)
+find_package( PCL REQUIRED)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -108,7 +109,9 @@ catkin_package(
 
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
-# include_directories(include)
+ include_directories( ${catkin_INCLUDE_DIRS}  ${PCL_INCLUDE_DIRS})
+ link_directories(${PCL_LIBRARY_DIRS})
+	add_definitions(${PCL_DEFINITIONS})
 
 ## Declare a C++ library
 # add_library(template_comm
@@ -129,7 +132,7 @@ catkin_package(
 
 ## Specify libraries to link a library or executable target against
  target_link_libraries(tango_driver_node
-   ${catkin_LIBRARIES}
+   ${catkin_LIBRARIES} ${PCL_LIBRARIES}
  )
 
 #############
