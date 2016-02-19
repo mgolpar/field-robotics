@@ -7,7 +7,8 @@ project(classification)
 find_package(catkin REQUIRED COMPONENTS roscpp geometry_msgs)
 
 ## System dependencies are found with CMake's conventions
-# find_package(Boost REQUIRED COMPONENTS system)
+ #find_package(Boost REQUIRED COMPONENTS system PCL REQUIRED)
+ find_package(PCL REQUIRED)
 
 
 ## Uncomment this if the package has a setup.py. This macro ensures
@@ -108,7 +109,9 @@ catkin_package(
 
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
-# include_directories(include)
+ include_directories( ${catkin_INCLUDE_DIRS}  ${PCL_INCLUDE_DIRS})
+ link_directories(${PCL_LIBRARY_DIRS})
+	add_definitions(${PCL_DEFINITIONS})
 
 ## Declare a C++ library
 # add_library(template_comm
@@ -129,7 +132,7 @@ catkin_package(
 
 ## Specify libraries to link a library or executable target against
  target_link_libraries(classification_node
-   ${catkin_LIBRARIES}
+   ${catkin_LIBRARIES} ${PCL_LIBRARIES}
  )
 
 #############
