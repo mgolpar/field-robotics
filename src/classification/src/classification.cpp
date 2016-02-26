@@ -1,6 +1,7 @@
 /*
- * Template.cpp
- * template file for communication between subsystems
+ * classification.cpp
+ * program doing data classification for the data coming from 
+ * tango_driver: 3D pose and point cloud
  * this is for AE598MRM class
  * Xinke Deng(UIUC)
  * 2016.2.10
@@ -27,13 +28,10 @@
 #include <math.h>
 #include <time.h>
 
-// publisher and subscriber
-
 geometry_msgs::Twist msg_pub;
-ros::Publisher pub_template;
-ros::Subscriber sub_template;
+ros::Publisher pub_classification;
 
-void callbackTemplate (const geometry_msgs::Twist& msg)
+void callback_Classification (const geometry_msgs::Twist& msg)
 {
 
   ROS_INFO_STREAM("Sending random velocity command:"
@@ -41,22 +39,22 @@ void callbackTemplate (const geometry_msgs::Twist& msg)
 		  << " angular=" << msg.angular.z);
   msg_pub = msg;
   
+  pub_classification.publish(msg_pub);
 }
 
 
 int main(int argc, char* argv[])
 {
   // Initialization of the publisher
-  ros::init(argc, argv, "comm_template");
+  ros::init(argc, argv, "classification");
 
-  ros::NodeHandle nh_template;
+  ros::NodeHandle nh_class;
 
-  pub_template = nh_template.advertise<geometry_msgs::Twist>("pub_template/data", 1000);
-  sub_template = nh_template.subscribe ("pub_template1/data",1000,&callbackTemplate);
-
-  pub_template.publish(msg_pub);
-
-  ros::spin();
+  pub_classification = nh_class.advertise<geometry_msgs::Twist>("classification/data", 1000);
+  ros::Subscriber sub_classification = nh_class.subscribe ("tango/data",1000,&callback_Classification);
+  while(ros::ok()){
+    ros::spinOnce();
+  }
 
 }
 

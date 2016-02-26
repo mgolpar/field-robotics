@@ -52,8 +52,8 @@ int main(int argc, char* argv[])
   pub_planning = nh_planning.advertise<geometry_msgs::Twist>("planning/data", 1000);
   ros::Subscriber sub_planning = nh_planning.subscribe ("classification/data",1000,&callback_Planning);
 
-  
-  ros::spin();
-
+  while(ros::ok()){
+     ros::spinOnce();
+  }
 }
 

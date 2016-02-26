@@ -1,11 +1,10 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(tango_driver)
+project(planning)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS roscpp geometry_msgs)
-find_package( PCL REQUIRED)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -109,9 +108,7 @@ catkin_package(
 
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
- include_directories( ${catkin_INCLUDE_DIRS}  ${PCL_INCLUDE_DIRS})
- link_directories(${PCL_LIBRARY_DIRS})
-	add_definitions(${PCL_DEFINITIONS})
+# include_directories(include)
 
 ## Declare a C++ library
 # add_library(template_comm
@@ -124,15 +121,15 @@ catkin_package(
 # add_dependencies(template_comm ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Declare a C++ executable
- add_executable(tango_driver_node tango_driver.cpp)
+ add_executable(planning_node src/planning.cpp)
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
 # add_dependencies(template_comm_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
- target_link_libraries(tango_driver_node
-   ${catkin_LIBRARIES} ${PCL_LIBRARIES}
+ target_link_libraries(planning_node
+   ${catkin_LIBRARIES}
  )
 
 #############

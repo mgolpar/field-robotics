@@ -1,13 +1,14 @@
 <?xml version="1.0"?>
 <package>
-  <name>template_comm</name>
+  <name>control</name>
   <version>0.0.0</version>
-  <description>The template for communication on Jackle</description>
+  <description>The package for controlling jackle ground robot</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag --> 
   <!-- Example:  -->
   <!-- <maintainer email="jane.doe@example.com">Jane Doe</maintainer> -->
   <maintainer email="xdeng12@illinois.edu">Xinke Deng</maintainer>
+  <maintainer email="cli67@illinois.edu">Chad Li</maintainer>
 
 
   <!-- One license tag required, multiple allowed, one license per tag -->

@@ -1,13 +1,14 @@
 <?xml version="1.0"?>
 <package>
-  <name>tutorial</name>
+  <name>tango_driver</name>
   <version>0.0.0</version>
-  <description>A example code which can send random velocity to jackal simulator</description>
+  <description>The tango_driver package</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag --> 
   <!-- Example:  -->
   <!-- <maintainer email="jane.doe@example.com">Jane Doe</maintainer> -->
   <maintainer email="xdeng12@illinois.edu">Xinke Deng</maintainer>
+  <maintainer email="cli67@illinois.edu">chad Li</maintainer>
 
 
   <!-- One license tag required, multiple allowed, one license per tag -->
@@ -19,7 +20,7 @@
   <!-- Url tags are optional, but mutiple are allowed, one per tag -->
   <!-- Optional attribute type can be: website, bugtracker, or repository -->
   <!-- Example: -->
-  <!-- <url type="website">http://wiki.ros.org/template_comm</url> -->
+  <!-- <url type="website">http://wiki.ros.org/tango_driver</url> -->
 
 
   <!-- Author tags are optional, mutiple are allowed, one per tag -->
