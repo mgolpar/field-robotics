@@ -1,0 +1,13 @@
+<launch>
+
+  <node pkg="tango_driver" type="tango_driver" name="tango_driver.cpp" output="screen" />
+  <node pkg="classification" type="classification" name="classification.cpp" output="screen" />  
+  <node pkg="planning" type="planning" name="planning.cpp" output="screen" />
+  <node pkg="planning" type="planning" name="planning.cpp" output="screen" />
+
+
+  <include file="$(find jackal_gazebo)/launch/steve_jackal_world.launch">
+    <arg name="config" value="front_laser" />
+  </include>
+
+</launch>

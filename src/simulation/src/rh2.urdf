@@ -1,0 +1,7 @@
+<link name="left_gripper">
+  <visual>
+    <geometry>
+      <mesh filename="package://pr2_description/meshes/gripper_v0/l_finger.dae"/>
+    </geometry>
+  </visual>
+</link>

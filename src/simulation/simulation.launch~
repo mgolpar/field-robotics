@@ -1,0 +1,36 @@
+<launch>
+  <node
+    pkg = "control"
+    name = "ctrl1"
+    type = "control_node"
+    output = "screen"
+  />
+  <node
+    pkg = "planning"
+    name = "plan1"
+    type = "planning_node"
+    output = "screen"
+   />
+  <node
+    pkg = "classification"
+    name = "class1"
+    type = "classification_node"
+    output = "screen"
+  />
+  <node
+    pkg = "tango_driver"
+    name = "tango1"
+    type = "tango_driver_node"
+    output = "screen"
+   />
+  <node
+    pkg = "template_comm"
+    name = "temp1"
+    type = "template_comm_node"
+    output = "screen"
+  />
+  <include
+    file="$(find simulation)/launch/steve_building_world.launch">
+  </include>
+
+</launch>
