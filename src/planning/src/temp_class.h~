@@ -1,0 +1,40 @@
+#ifndef _TEMP_CLASS_H_
+#define _TEMP_CLASS_H_
+
+
+#include <ros/ros.h>
+#include <geometry_msgs/Twist.h>
+
+class temp_class {
+private:
+    ros::NodeHandle n;
+    ros::Publisher pub;
+    ros::Subscriber sub;
+
+    // Just for testing
+    geometry_msgs::Twist vel;
+
+public:
+    temp_class() {
+        pub = n.advertise<geometry_msgs::Twist>("node1_pub",1000);
+	sub = n.subscribe("node0_pub",1000,&temp_class::PoseCallback,this);
+        // Testing again
+	x=0;
+	y=0;
+        // -------------
+	ROS_INFO_STREAM("initialized");
+    }
+    ~temp_class() {
+    }
+    double x;
+    double y;
+
+    void setVel(const double x, const double y);
+    void PoseCallback(const geometry_msgs::Twist& msg) {
+	ROS_INFO_STREAM("I received " << "position=(" << msg.linear.x << ", " << msg.linear.y << ")");
+    }
+
+};
+
+
+#endif

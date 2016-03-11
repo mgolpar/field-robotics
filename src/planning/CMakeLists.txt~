@@ -126,7 +126,7 @@ include_directories( ${catkin_INCLUDE_DIRS})
 #       directory. For example, the "src/temp_class.cpp" below actually means
 #       "(yourworkspace)/src/(package_name)/src/temp_class.cpp", assuming you
 #       are following our convention to create packages
-# add_library(planning src/planning_class.cpp)
+add_library(planning src/planning_class.cpp)
 ## --------------------------------------------------------------------
 
 

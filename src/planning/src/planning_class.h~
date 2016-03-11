@@ -1,0 +1,40 @@
+#ifndef _PLANNING_CLASS_H_
+#define _PLANNING_CLASS_H_
+
+
+#include <ros/ros.h>
+#include <geometry_msgs/Twist.h>
+
+class planning_class {
+private:
+    ros::NodeHandle n;
+    ros::Publisher pub;
+    ros::Subscriber sub;
+
+    // Just for testing
+    geometry_msgs::Twist vel;
+
+public:
+    planning_class() {
+        pub = n.advertise<geometry_msgs::Twist>("planning/data",1000);
+	sub = n.subscribe("classification/data",1000,&planning_class::PoseCallback,this);
+        // For testing
+	x=0;
+	y=0;
+        // -------------
+	ROS_INFO_STREAM("initialized");
+    }
+    ~temp_class() {
+    }
+    double x;
+    double y;
+
+    void setVel(const double x, const double y);
+    void PoseCallback(const geometry_msgs::Twist& msg) {
+	ROS_INFO_STREAM("I received " << "position=(" << msg.linear.x << ", " << msg.linear.y << ")");
+    }
+
+};
+
+
+#endif
