@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <!--
+Obselete message. Please disregard.
+  -->
+
+
+  <xacro:include filename="accessories/standoffs.urdf.xacro" />
+  <xacro:include filename="accessories/bridge_plate.urdf.xacro" />
+
+
+  <!-- If enabled, generate the Google Tango payload (replacing the default laser scanner). -->
+  <xacro:include filename="$(find simulation)/src/google_tango.urdf.xacro" />
+  <xacro:if value="$(optenv JACKAL_LASER 0)">
+    <sick_lms1xx_mount prefix="$(optenv JACKAL_LASER_MOUNT front)"
+                       topic="$(optenv JACKAL_LASER_TOPIC scan)" />
+
+    <joint name="$front_laser_mount_joint" type="fixed">
+      <origin xyz="$(optenv JACKAL_LASER_OFFSET 0 0 0)"
+              rpy="$(optenv JACKAL_LASER_RPY 0 0 0)" />
+      <parent link="$(optenv JACKAL_LASER_MOUNT front)_mount" />
+      <child link="$(optenv JACKAL_LASER_MOUNT front)_laser_mount" />
+    </joint>
+  </xacro:if>
+
+
+  <!-- If enabled, generate the upgraded Navsat payload (a Novatel Smart6). -->
+  <xacro:include filename="accessories/novatel_smart6.urdf.xacro" />
+  <xacro:if value="$(optenv JACKAL_NAVSAT 0)">
+    <bridge_plate mount="$(optenv JACKAL_NAVSAT_MOUNT rear)" 
+                  height="$(optenv JACKAL_NAVSAT_HEIGHT 0.1)" />
+    <novatel_smart6 prefix="$(optenv JACKAL_NAVSAT_MOUNT rear)"/>
+
+    <joint name="$(optenv JACKAL_NAVSAT_MOUNT rear)_navsat_joint" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <parent link="$(optenv JACKAL_NAVSAT_MOUNT rear)_bridge" />
+      <child link="$(optenv JACKAL_NAVSAT_MOUNT rear)_navsat" />
+    </joint>
+  </xacro:if>
+
+ 
+</robot>

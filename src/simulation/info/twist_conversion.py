@@ -12,7 +12,6 @@ def callback (cmdVel):
 	PublishTwistMsgs.publish(cmdVel) #TwistMsgs
 
 
-
 def twist_conversion():
 	rospy.init_node('twist_conversion', anonymous=True)
 	rospy.Subscriber("cmd_vel",Twist, callback) #change to TwistStamped

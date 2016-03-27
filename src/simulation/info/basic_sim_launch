@@ -1,0 +1,25 @@
+roslaunch jackal_gazebo jackal_world.launch config:=front_laser
+
+roslaunch jackal_viz view_robot.launch
+
+
+Just add the node launch and destroy the twist interactive marker command sequence. 
+
+
+
+
+part of launch file for low level controllers 
+
+  <arg name="config" default="front_laser" 
+<!-- Load Jackal's description, controllers, and teleop nodes. -->
+  <include file="$(find jackal_description)/launch/description.launch">
+    <arg name="config" value="$(arg config)" />
+  </include>
+  <include file="$(find jackal_control)/launch/control.launch" />
+  <include file="$(find jackal_control)/launch/teleop.launch">
+    <arg name="joystick" value="false"/>
+  </include>
+
+
+
+
