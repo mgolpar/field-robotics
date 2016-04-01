@@ -1,0 +1,21 @@
+import rospy 
+from geometry_msgs.msgs import Twist, TwistStamped
+import time
+
+def callback (cmdVel)
+	cmdVel.twist = TwistMsgs
+
+	PublishTwistMsgs = rospy.Publisher('twist_command', Twist, queue_size=10)
+	PublishTwistMsgs.publish(TwistMsgs)
+
+
+
+def cmd_vel_listening():
+	rospy.Subscriber("cmd_vel",TwistStamped, callback)
+	rospy.spin()
+
+if __name__ = '__main__':
+	rospy.init_node('twiststamped_to_twist', anonymous=True)
+	cmd_vel_listening()
+
+

@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+<!--
+Copyright (c) 2016, Steven Macenski, University of Illinois at Urbana-Champaign
+All rights reserved. -->
+
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:property name="laser_x" value="0.105" />
+  <xacro:property name="laser_y" value="0.102" />
+  <xacro:property name="laser_z" value="0.152" />
+  <xacro:property name="laser_mass" value="1.1" />
+
+  <xacro:macro name="box_inertial" params="x y z mass">
+    <inertial>
+      <mass value="${mass}" />
+      <origin xyz="0 0 0" />
+      <inertia ixx="${0.0833333 * mass * (y*y + z*z)}" ixy="0.0" ixz="0.0" 
+        iyy="${0.0833333 * mass * (x*x + z*z)}" iyz="0.0" 
+        izz="${0.0833333 * mass * (x*x + y*y)}" />
+    </inertial>
+  </xacro:macro>
+
+  <xacro:macro name="sick_lms1xx_mount" params="prefix topic">
+    <link name="${prefix}_laser_mount">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <!-- Origin of this mesh is the base of the bracket. -->
+          <mesh filename="package://jackal_description/meshes/sick-lms1xx-bracket.stl" />
+        </geometry>
+        <material name="dark_grey" />
+      </visual>
+    </link>
+
+    <link name="${prefix}_laser">
+      <xacro:box_inertial x="${laser_x}" y="${laser_y}" z="${laser_z}" mass="${laser_mass}" />
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <!-- Origin of this mesh is the focal point of the LIDAR. -->
+          <mesh filename="package://jackal_description/meshes/sick-lms1xx.stl" />
+        </geometry>
+        <material name="light_grey" />
+      </visual>
+      <collision>
+        <origin xyz="0 0 -0.05" rpy="0 0 0" />
+        <geometry>
+          <box size="${laser_x} ${laser_y} ${laser_z}" />
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="${prefix}_laser_joint" type="fixed">
+      <!-- This offset is from the base of the bracket to the LIDAR's focal point. -->
+      <origin xyz="0 0 0.149" rpy="0 0 0" />
+      <parent link="${prefix}_laser_mount" />
+      <child link="${prefix}_laser" />
+    </joint>
+
+    <gazebo reference="${prefix}_laser">  
+      <sensor type="depth" name="${prefix}_laser">
+        <always_on>true</always_on>
+        <update_rate>20.0</update_rate>
+        <camera>
+          <horizontal_fov>${60.0*3.1415926539/180.0}</horizontal_fov>
+          <image>
+            <format>R8G8B8</format>
+            <width>640</width>
+            <height>480</height>
+          </image>
+          <clip>
+            <near>0.05</near>
+            <far>8.0</far>
+          </clip>
+        </camera>
+        <plugin name="kinect_camera_controller" filename="libgazebo_ros_openni_kinect.so">
+          <cameraName>camera</cameraName>
+          <alwaysOn>true</alwaysOn>
+          <updateRate>10</updateRate>
+          <imageTopicName>rgb/image_raw</imageTopicName>
+          <depthImageTopicName>depth/image_raw</depthImageTopicName>
+          <pointCloudTopicName>depth/points</pointCloudTopicName>
+          <cameraInfoTopicName>rgb/camera_info</cameraInfoTopicName>
+          <depthImageCameraInfoTopicName>depth/camera_info</depthImageCameraInfoTopicName>
+          <pointCloudCutoffMax>5</pointCloudCutoffMax>
+          <frameName>base_link</frameName>
+          <baseline>0.1</baseline>
+          <distortion_k1>0.0</distortion_k1>
+          <distortion_k2>0.0</distortion_k2>
+          <distortion_k3>0.0</distortion_k3>
+          <distortion_t1>0.0</distortion_t1>
+          <distortion_t2>0.0</distortion_t2>
+          <pointCloudCutoff>0.4</pointCloudCutoff>
+        </plugin>
+      </sensor>
+    </gazebo>
+  </xacro:macro>
+
+  <property name="cam_px" value="-0.087" />
+  <property name="cam_pz" value="0.2870" />
+  <property name="cam_or" value="0" />
+  <property name="cam_op" value="0" />
+  <property name="cam_oy" value="0" />
+</robot>

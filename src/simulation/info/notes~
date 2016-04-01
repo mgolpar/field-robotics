@@ -1,0 +1,32 @@
+setup
+ros-indigo-jackal-simulator ros-indigo-jackal-desktop
+
+the standard launch systems for simulation applies. 
+
+roslaunch jackal_gazebo jackal_world.launch front_laser:=true 
+throws you gazebo with the front_laser. Probable chance to update a 
+config option to also have the tango information
+
+roslaunch jackal_viz view_robot.launch
+throws rviz, in which you can add the laser data from the /scan topic
+
+For new nodes to control from the plans, publishing to the /cmd_vel topics to dirve with geometry/Twist messages.
+
+This simulation includes the slippage and skidding (observed) and obviously mass and inertial properties that gazebo is good at. I will have to take a look to see what the story is on the skidding/slipping stuff knowing that different floors change COF and other parameters
+
+Format of each of the elements (control via differential driver controller) and the planner just needs to publish to the /cmd_vel topic and various things can subscribe to the odom/etc topics for pushed data. 
+
+How to activate hardware from the fakeness? 
+
+what data compes back (encoder vel/pos, temp of a couple parts, IMU lin/ang anything else?)
+
+current planner implemented on ros_planning
+
+NEXT figure out the navigation launch files, how fake --> real, URDF tango, rostango
+
+
+rostopic pub /cmd_vel geometry_msgs/Twist '{linear: {x: 1.0, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 0.0}}'
+to publish velocities to the controller
+
+
+sudo chown <your username>:<your usergroup> -R <path to>/.blabla
